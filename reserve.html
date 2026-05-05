@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="بوصله — صفحة طلب حجز. املأ البيانات واضغط حفظ." />
+  <title>بوصله | طلب حجز</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a33;
+      --card:#101d3d;
+      --muted:#a9b4d0;
+      --text:#eef2ff;
+      --brand:#7c3aed;
+      --brand2:#22c55e;
+      --danger:#ef4444;
+      --shadow: 0 12px 35px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1000px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Kufi Arabic","Noto Sans Arabic",Tahoma, sans-serif;
+      background: radial-gradient(1200px 900px at 80% -20%, rgba(124,58,237,.35), transparent 60%),
+                  radial-gradient(900px 800px at 10% 10%, rgba(34,197,94,.18), transparent 60%),
+                  linear-gradient(180deg, #070b14 0%, var(--bg) 70%);
+      color:var(--text);
+      line-height:1.7;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:20px 18px 80px}
+    .top{
+      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+      margin-bottom: 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:1000;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
+      box-shadow: var(--shadow);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      transition:.2s transform, .2s background, .2s border;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18);}
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(90,34,195,1));
+      border-color: rgba(124,58,237,.55);
+      box-shadow: 0 12px 30px rgba(124,58,237,.25);
+    }
+    .btn-green{
+      background: linear-gradient(135deg, rgba(34,197,94,1), rgba(22,163,74,1));
+      border-color: rgba(34,197,94,.55);
+      box-shadow: 0 12px 30px rgba(34,197,94,.22);
+    }
+    .btn-danger{
+      background: rgba(239,68,68,.12);
+      border-color: rgba(239,68,68,.35);
+      color: rgba(255,255,255,.95);
+    }
+    .panel{
+      background: rgba(16,29,61,.65);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    h1{margin:0 0 8px; font-size: clamp(22px, 2.5vw, 32px);}
+    .sub{margin:0 0 14px; color: rgba(169,180,208,.95);}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    label{display:block; font-weight:900; margin: 0 0 6px; font-size:13px; color: rgba(238,242,255,.92);}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+    }
+    textarea{min-height: 110px; resize: vertical;}
+    .hint{font-size:12px; color: rgba(169,180,208,.95); margin-top:6px;}
+    .actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .listWrap{margin-top:14px}
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+    .meta{
+      color: rgba(169,180,208,.95);
+      font-size: 13px;
+    }
+    .row strong{display:block}
+    .rowBtns{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+    }
+    .tag{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(124,58,237,.16);
+      border:1px solid rgba(124,58,237,.25);
+      color: rgba(238,242,255,.92);
+      white-space:nowrap;
+    }
+
+    .toast{
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      left: 16px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(34,197,94,.14);
+      border:1px solid rgba(34,197,94,.25);
+      color: rgba(238,242,255,.95);
+      display:none;
+      box-shadow: var(--shadow);
+      z-index: 99;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px){
+      .grid{grid-template-columns: 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // ========= EDIT THESE =========
+    const COMPANY_NAME = "بوصله";
+    const STORAGE_KEY = "BOSLA_RESERVATIONS_V1";
+    const WHATSAPP_NUMBER = "966558581277"; // رقمك بصيغة دولية بدون +
+    // ==============================
+
+    const $ = (id) => document.getElementById(id);
+
+    function nowISO(){
+      return new Date().toISOString();
+    }
+
+    function uid(){
+      return "BOS-" + Math.random().toString(16).slice(2,8).toUpperCase() + "-" + Date.now().toString().slice(-6);
+    }
+
+    function loadReservations(){
+      try{
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      }catch(e){
+        return [];
+      }
+    }
+
+    function saveReservations(list){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.style.display = "block";
+      setTimeout(()=> t.style.display="none", 2200);
+    }
+
+    function validateForm(data){
+      const errors = [];
+      if(!data.fullName || data.fullName.trim().length < 3) errors.push("اكتب الاسم كامل (٣ أحرف على الأقل).");
+      if(!data.phone || data.phone.trim().length < 9) errors.push("اكتب رقم جوال صحيح.");
+      if(!data.service) errors.push("اختر نوع الخدمة.");
+      if(!data.preferredDay) errors.push("اختر اليوم المفضل.");
+      if(!data.preferredTime) errors.push("اختر الوقت المفضل.");
+      return errors;
+    }
+
+    function collectForm(){
+      return {
+        id: uid(),
+        createdAt: nowISO(),
+        status: "New",
+        fullName: $("fullName").value.trim(),
+        email: $("email").value.trim(),
+        phone: $("phone").value.trim(),
+        service: $("service").value,
+        preferredDay: $("preferredDay").value,
+        preferredTime: $("preferredTime").value,
+        notes: $("notes").value.trim()
+      };
+    }
+
+    function resetForm(){
+      $("fullName").value = "";
+      $("email").value = "";
+      $("phone").value = "";
+      $("service").value = "";
+      $("preferredDay").value = "";
+      $("preferredTime").value = "";
+      $("notes").value = "";
+    }
+
+    function render(){
+      const list = loadReservations().sort((a,b)=> (b.createdAt||"").localeCompare(a.createdAt||""));
+      const wrap = $("reservations");
+      wrap.innerHTML = "";
+
+      if(list.length === 0){
+        wrap.innerHTML = `<div class="meta">لا توجد طلبات محفوظة حتى الآن.</div>`;
+        return;
+      }
+
+      list.forEach(item=>{
+        const div = document.createElement("div");
+        div.className = "row";
+        div.innerHTML = `
+          <div>
+            <span class="tag">${item.status}</span>
+            <div style="margin-top:8px">
+              <strong>${item.fullName}</strong>
+              <div class="meta">رقم: ${item.phone}${item.email ? " • بريد: "+item.email : ""}</div>
+              <div class="meta">الخدمة: ${item.service} • اليوم: ${item.preferredDay} • الوقت: ${item.preferredTime}</div>
+              ${item.notes ? `<div class="meta">ملاحظات: ${escapeHtml(item.notes)}</div>` : ""}
+              <div class="meta">ID: ${item.id} • ${new Date(item.createdAt).toLocaleString("ar-SA")}</div>
+            </div>
+          </div>
+          <div class="rowBtns">
+            <button class="btn btn-small" onclick="markContacted('${item.id}')">تم التواصل</button>
+            <button class="btn btn-small btn-green" onclick="sendWhatsApp('${item.id}')">إرسال واتساب</button>
+            <button class="btn btn-small btn-danger" onclick="removeOne('${item.id}')">حذف</button>
+          </div>
+        `;
+        wrap.appendChild(div);
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[s]));
+    }
+
+    function saveRequest(){
+      const data = collectForm();
+      const errors = validateForm(data);
+      if(errors.length){
+        alert(errors.join("\n"));
+        return;
+      }
+      const list = loadReservations();
+      list.push(data);
+      saveReservations(list);
+      toast("✅ تم حفظ طلب الحجز");
+      resetForm();
+      render();
+    }
+
+    function markContacted(id){
+      const list = loadReservations();
+      const i = list.findIndex(x=>x.id===id);
+      if(i>=0){
+        list[i].status = "Contacted";
+        saveReservations(list);
+        toast("✅ تم تحديث الحالة");
+        render();
+      }
+    }
+
+    function removeOne(id){
+      const list = loadReservations().filter(x=>x.id!==id);
+      saveReservations(list);
+      toast("🗑️ تم حذف الطلب");
+      render();
+    }
+
+    function clearAll(){
+      if(!confirm("هل تريد حذف جميع الطلبات المحفوظة؟")) return;
+      saveReservations([]);
+      toast("🗑️ تم مسح جميع الطلبات");
+      render();
+    }
+
+    function exportCSV(){
+      const list = loadReservations();
+      if(!list.length){
+        alert("لا توجد بيانات لتصديرها.");
+        return;
+      }
+      const headers = ["id","createdAt","status","fullName","email","phone","service","preferredDay","preferredTime","notes"];
+      const rows = [headers.join(",")].concat(list.map(o =>
+        headers.map(h => `"${String(o[h] ?? "").replace(/"/g,'""')}"`).join(",")
+      ));
+      const blob = new Blob([rows.join("\n")], {type:"text/csv;charset=utf-8;"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "bosla-reservations.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function makeWhatsText(item){
+      return `طلب حجز جديد (${COMPANY_NAME})
+ID: ${item.id}
+الاسم: ${item.fullName}
+الجوال: ${item.phone}
+البريد: ${item.email || "-"}
+الخدمة: ${item.service}
+اليوم: ${item.preferredDay}
+الوقت: ${item.preferredTime}
+ملاحظات: ${item.notes || "-"}
+تاريخ الطلب: ${new Date(item.createdAt).toLocaleString("ar-SA")}`;
+    }
+
+    function sendWhatsApp(id){
+      const list = loadReservations();
+      const item = list.find(x=>x.id===id);
+      if(!item) return;
+      const text = encodeURIComponent(makeWhatsText(item));
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+    }
+
+    function sendCurrentWhatsApp(){
+      const data = collectForm();
+      const errors = validateForm(data);
+      if(errors.length){
+        alert(errors.join("\n"));
+        return;
+      }
+      const text = encodeURIComponent(makeWhatsText(data));
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+    }
+
+    window.addEventListener("DOMContentLoaded", ()=>{
+      $("company").textContent = COMPANY_NAME;
+      render();
+    });
+  </script>
+
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:15px; font-weight:1000" id="company">بوصله</div>
+          <div style="font-size:12px; color:rgba(169,180,208,.95); font-weight:800">صفحة طلب الحجز (مع حفظ)</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="./index.html">← رجوع لصفحة الهبوط</a>
+        <button class="btn btn-danger" onclick="clearAll()">مسح الكل</button>
+        <button class="btn btn-primary" onclick="exportCSV()">تصدير CSV</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h1>قدّم طلب حجز</h1>
+      <p class="sub">املأ البيانات واضغط <b>حفظ الطلب</b>. سيتم حفظ الطلب في هذا المتصفح ويمكنك تصديره.</p>
+
+      <div class="grid">
+        <div>
+          <label for="fullName">الاسم الكامل *</label>
+          <input id="fullName" type="text" placeholder="مثال: محمد أحمد" />
+          <div class="hint">اكتب الاسم كما تحب أن نناديك.</div>
+        </div>
+
+        <div>
+          <label for="phone">رقم الجوال *</label>
+          <input id="phone" type="tel" placeholder="مثال: 05xxxxxxxx" />
+          <div class="hint">يفضل رقم واتساب.</div>
+        </div>
+
+        <div>
+          <label for="email">البريد الإلكتروني (اختياري)</label>
+          <input id="email" type="email" placeholder="example@email.com" />
+          <div class="hint">للتأكيدات والمتابعة.</div>
+        </div>
+
+        <div>
+          <label for="service">نوع الخدمة *</label>
+          <select id="service">
+            <option value="">اختر…</option>
+            <option>مكالمة تعريف 15 دقيقة</option>
+            <option>Starter (تشخيص 60 دقيقة + خطة أسبوع)</option>
+            <option>Core (برنامج 6 أسابيع)</option>
+            <option>Premium (VIP)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="preferredDay">اليوم المفضل *</label>
+          <select id="preferredDay">
+            <option value="">اختر…</option>
+            <option>الأحد</option>
+            <option>الاثنين</option>
+            <option>الثلاثاء</option>
+            <option>الأربعاء</option>
+            <option>الخميس</option>
+            <option>الجمعة</option>
+            <option>السبت</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="preferredTime">الوقت المفضل *</label>
+          <select id="preferredTime">
+            <option value="">اختر…</option>
+            <option>صباح (9–12)</option>
+            <option>ظهر (12–3)</option>
+            <option>عصر (3–6)</option>
+            <option>مساء (6–9)</option>
+            <option>ليل (9–11)</option>
+          </select>
+        </div>
+
+        <div style="grid-column: 1 / -1;">
+          <label for="notes">ملاحظات (اختياري)</label>
+          <textarea id="notes" placeholder="مثال: القرار المؤجل عندي يخص العمل… وأفضل مكالمة عبر Zoom."></textarea>
+          <div class="hint">أي شيء يساعدنا نفهم وضعك قبل المكالمة.</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveRequest()">💾 حفظ الطلب</button>
+        <button class="btn btn-green" onclick="sendCurrentWhatsApp()">📲 إرسال الطلب واتساب الآن</button>
+        <button class="btn" onclick="resetForm()">تفريغ النموذج</button>
+      </div>
+
+      <div class="hint" style="margin-top:10px;">
+        🔒 ملاحظة: الحفظ يتم محليًا على نفس الجهاز/المتصفح. للتخزين المركزي نربطها لاحقًا بـ Google Sheets.
+      </div>
+    </div>
+
+    <div class="panel listWrap">
+      <h2 style="margin:0 0 8px;">الطلبات المحفوظة</h2>
+      <div class="sub">تقدر تغيّر الحالة إلى “تم التواصل” أو ترسل التفاصيل لواتساب أو تصدّر CSV.</div>
+      <div id="reservations"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</body>
+</html>

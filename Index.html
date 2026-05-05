@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="بوصله — برنامج لايف كوتشينج 6 أسابيع لتحويل الضغط والتشتت والقرارات المؤجلة إلى وضوح وخطوات تنفيذ ومتابعة." />
+  <title>بوصله | برنامج وضوح + تنفيذ</title>
+
+  <meta property="og:title" content="بوصله | برنامج وضوح + تنفيذ" />
+  <meta property="og:description" content="تحويل الضغط والتشتت والقرارات المؤجلة إلى وضوح وخطوات تنفيذ ومتابعة خلال 6 أسابيع." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_SA" />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a33;
+      --card:#101d3d;
+      --muted:#a9b4d0;
+      --text:#eef2ff;
+      --brand:#7c3aed;
+      --brand2:#22c55e;
+      --shadow: 0 12px 35px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Kufi Arabic", "Noto Sans Arabic", "Tahoma", sans-serif;
+      background: radial-gradient(1200px 900px at 80% -20%, rgba(124,58,237,.35), transparent 60%),
+                  radial-gradient(900px 800px at 10% 10%, rgba(34,197,94,.18), transparent 60%),
+                  linear-gradient(180deg, #070b14 0%, var(--bg) 70%);
+      color:var(--text);
+      line-height:1.7;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,11,20,.55);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .topbar .inner{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
+      box-shadow: var(--shadow);
+    }
+    .nav{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+      color:rgba(238,242,255,.9);
+      font-weight:600;
+      font-size:14px;
+    }
+    .nav a{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+      opacity:.9;
+    }
+    .nav a:hover{
+      border-color: rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      opacity:1;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      transition:.2s transform, .2s background, .2s border;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18);}
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(90,34,195,1));
+      border-color: rgba(124,58,237,.55);
+      box-shadow: 0 12px 30px rgba(124,58,237,.25);
+    }
+    .btn-green{
+      background: linear-gradient(135deg, rgba(34,197,94,1), rgba(22,163,74,1));
+      border-color: rgba(34,197,94,.55);
+      box-shadow: 0 12px 30px rgba(34,197,94,.22);
+    }
+
+    .hero{padding:34px 0 18px;}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .panel{
+      background: rgba(16,29,61,.65);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .hero-main{
+      padding:26px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-main:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 280px at 85% 10%, rgba(124,58,237,.35), transparent 60%),
+                  radial-gradient(620px 280px at 15% 20%, rgba(34,197,94,.18), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-main > *{position:relative}
+    .badge{
+      display:inline-flex;
+      gap:10px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      color: rgba(238,242,255,.92);
+      font-weight:800;
+      font-size:13px;
+    }
+    h1{
+      margin:14px 0 10px;
+      line-height:1.25;
+      font-size: clamp(26px, 3vw, 40px);
+      letter-spacing:-.3px;
+    }
+    .lead{
+      margin:0 0 16px;
+      color: rgba(238,242,255,.88);
+      font-size: 16px;
+    }
+    .bullets{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin: 14px 0 18px;
+    }
+    .bullet{
+      display:flex;
+      gap:10px;
+      padding:12px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+      color: rgba(238,242,255,.9);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      margin-top:7px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      flex:0 0 auto;
+    }
+    .hero-cta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 10px;
+    }
+    .note{
+      margin-top: 10px;
+      color: rgba(169,180,208,.95);
+      font-size: 13px;
+    }
+
+    .hero-side{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .mini-card{
+      padding:16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+    }
+    .mini-title{
+      font-weight:900;
+      margin:0 0 6px;
+      font-size: 15px;
+    }
+    .mini-text{
+      margin:0;
+      color: rgba(169,180,208,.95);
+      font-size:14px;
+    }
+    .price-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:12px;
+      padding-top:12px;
+      border-top: 1px dashed rgba(255,255,255,.10);
+    }
+    .price{
+      font-weight:1000;
+      font-size: 18px;
+    }
+    .pill{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(124,58,237,.18);
+      border: 1px solid rgba(124,58,237,.25);
+      color: rgba(238,242,255,.92);
+      white-space:nowrap;
+    }
+
+    section{padding:18px 0}
+    .section-title{
+      font-size: 22px;
+      margin: 0 0 8px;
+      letter-spacing:-.2px;
+    }
+    .section-sub{
+      margin: 0 0 14px;
+      color: rgba(169,180,208,.95);
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      padding:18px;
+      border-radius: var(--radius);
+      background: rgba(16,29,61,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
+    }
+    .card h3{margin:0 0 8px; font-size: 16px}
+    .card p{margin:0; color: rgba(169,180,208,.95); font-size: 14px}
+
+    .framework{display:grid; grid-template-columns: 1fr; gap:12px;}
+    .step{
+      display:flex; gap:14px;
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+    }
+    .num{
+      width:38px; height:38px; border-radius: 14px;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:1000;
+      background: rgba(124,58,237,.18);
+      border:1px solid rgba(124,58,237,.25);
+      color: rgba(238,242,255,.95);
+      flex:0 0 auto;
+    }
+    .step h4{margin:0 0 4px}
+    .step p{margin:0; color: rgba(169,180,208,.95)}
+
+    .list{margin:0; padding:0 18px 0 0; color: rgba(238,242,255,.9);}
+    .list li{margin: 8px 0}
+    .guarantee{
+      border:1px solid rgba(34,197,94,.30);
+      background: rgba(34,197,94,.10);
+    }
+    .guarantee strong{color:#b7f7c9}
+
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      align-items:stretch;
+    }
+    .plan{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(16,29,61,.55);
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .plan.featured{
+      border-color: rgba(124,58,237,.45);
+      box-shadow: 0 18px 50px rgba(124,58,237,.22);
+    }
+    .plan.featured:before{
+      content:"الأكثر طلبًا";
+      position:absolute;
+      top:14px; left:14px;
+      background: rgba(124,58,237,.16);
+      border:1px solid rgba(124,58,237,.25);
+      color: rgba(238,242,255,.95);
+      font-weight:1000;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .plan h3{margin:0; font-size:18px}
+    .plan .tag{color: rgba(169,180,208,.95); font-size:13px}
+    .plan .money{font-size:22px; font-weight:1000}
+    .plan .desc{color: rgba(169,180,208,.95); margin:0; font-size:14px}
+    .plan ul{margin:0; padding:0 18px 0 0}
+    .plan li{margin:8px 0; color: rgba(238,242,255,.9)}
+    .plan .foot{margin-top:auto; display:flex; gap:10px; flex-wrap:wrap}
+
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    details{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+      padding:14px 14px;
+    }
+    summary{cursor:pointer; font-weight:900; list-style:none;}
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color: rgba(169,180,208,.95); font-size:14px}
+
+    .final-cta{text-align:center; padding:26px 18px;}
+    .final-cta h2{
+      margin:0 0 8px;
+      font-size: clamp(22px, 2.6vw, 34px);
+      line-height:1.25;
+    }
+    .final-cta p{
+      margin:0 auto 14px;
+      max-width: 720px;
+      color: rgba(169,180,208,.95);
+    }
+    footer{
+      padding:18px 0 50px;
+      color: rgba(169,180,208,.9);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 18px;
+    }
+    .footer-grid{
+      display:flex;
+      gap:12px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .floating{
+      position:fixed;
+      bottom:14px;
+      right:14px;
+      left:14px;
+      z-index:60;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .floating .btn{
+      pointer-events:auto;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+    }
+
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns: 1fr; }
+      .bullets{grid-template-columns: 1fr; }
+      .grid-3{grid-template-columns: 1fr;}
+      .pricing{grid-template-columns: 1fr;}
+      .faq{grid-template-columns: 1fr;}
+      .nav{display:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    // ========= EDIT THESE =========
+    const COMPANY_NAME = "بوصله";
+    const RESERVATION_PAGE = "./reserve.html";
+    const WHATSAPP_NUMBER = "966558581277"; // ضع رقمك بصيغة دولية بدون +
+    const WHATSAPP_TEXT = encodeURIComponent("هلا 👋 أبغى حجز مكالمة تعريف 15 دقيقة مع بوصله لبرنامج (وضوح + تنفيذ).");
+    // ==============================
+    function goReserve(){ window.location.href = RESERVATION_PAGE; }
+    function goWhats(){ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT}`, "_blank"); }
+  </script>
+
+  <div class="topbar">
+    <div class="container">
+      <div class="inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <div style="font-size:14px; opacity:.92; font-weight:1000" id="brandName">بوصله</div>
+            <div style="font-size:12px; color:rgba(169,180,208,.95); font-weight:700">لايف كوتشينج عام | ضغط • تشتت • قرارات</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="التنقل">
+          <a href="#what">وش بتحصل؟</a>
+          <a href="#how">كيف نشتغل؟</a>
+          <a href="#pricing">الباقات</a>
+          <a href="#faq">الأسئلة</a>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn btn-small btn-green" href="javascript:void(0)" onclick="goWhats()">واتساب</a>
+          <a class="btn btn-small btn-primary" href="javascript:void(0)" onclick="goReserve()">احجز الآن</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="panel hero-main">
+          <span class="badge">⚡ برنامج 6 أسابيع — 1:1 + متابعة واتساب</span>
+          <h1>تحت ضغط؟ تائه؟ عندك قرار مؤجل؟<br/>بوصله تساعدك تطلع من الدوامة خلال 6 أسابيع.</h1>
+          <p class="lead">
+            هذا مو تحفيز مؤقت ولا حشو. هذا نظام عملي يحوّلك من <b>ضغط/تشتت/تفكير زايد</b> إلى
+            <b>وضوح قرار + خطوات تنفيذ + متابعة تثبّت التغيير</b> — بسرية وبدون أحكام.
+          </p>
+
+          <div class="bullets">
+            <div class="bullet"><span class="dot"></span><div><b>قرار واحد واضح كل أسبوع</b><div style="color:rgba(169,180,208,.95); font-size:13px;">نوقف التردد ونحسم.</div></div></div>
+            <div class="bullet"><span class="dot"></span><div><b>3 خطوات تنفيذ بسيطة</b><div style="color:rgba(169,180,208,.95); font-size:13px;">تناسب وقتك وحياتك.</div></div></div>
+            <div class="bullet"><span class="dot"></span><div><b>متابعة واتساب 5 أيام</b><div style="color:rgba(169,180,208,.95); font-size:13px;">تمنع الرجوع للدوامة.</div></div></div>
+            <div class="bullet"><span class="dot"></span><div><b>مساحة سرية وبدون أحكام</b><div style="color:rgba(169,180,208,.95); font-size:13px;">تقدر تقول الحقيقة كاملة.</div></div></div>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="javascript:void(0)" onclick="goReserve()">احجز مكالمة تعريف 15 دقيقة</a>
+            <a class="btn" href="javascript:void(0)" onclick="goWhats()">راسلني واتساب</a>
+          </div>
+
+          <div class="note">✅ الحجز هنا يفتح صفحة “طلب حجز” — وتقدر تحفظ الطلب بنقرة واحدة.</div>
+        </div>
+
+        <aside class="panel hero-side" aria-label="مربع سريع">
+          <div class="mini-card">
+            <div class="mini-title">الضمان</div>
+            <p class="mini-text">
+              <b>ضمان الوضوح — الأسبوع الأول:</b><br/>
+              إذا ما خرجت بقرار واضح + خطة أسبوع + نظام متابعة… تحصل على <b>جلسة إضافية مجانًا</b>.
+            </p>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-title">مناسب لك إذا</div>
+            <p class="mini-text">✔ مضغوط • ✔ مشتت • ✔ قرار مؤجل • ✔ تستهلك محتوى وما تتغير</p>
+            <div class="price-row">
+              <span class="pill">مقاعد محدودة شهريًا</span>
+              <span style="color:rgba(169,180,208,.95); font-weight:900; font-size:13px">خصوصية كاملة</span>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-title">بوابة دخول (Starter)</div>
+            <p class="mini-text">جلسة تشخيص 60 دقيقة + خطة أسبوع مكتوبة خلال 24 ساعة.</p>
+            <div class="price-row">
+              <div class="price">349–499 ر.س</div>
+              <a class="btn btn-small btn-primary" href="javascript:void(0)" onclick="goReserve()">قدّم طلب</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <section id="what">
+    <div class="container">
+      <h2 class="section-title">وش بتحصل بالضبط؟</h2>
+      <p class="section-sub">مخرجات ملموسة تمشي عليها — مو كلام عام.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>6 جلسات 1:1</h3>
+          <p>كل أسبوع نطلع بقرار واحد واضح + خطة تنفيذ بسيطة.</p>
+        </div>
+        <div class="card">
+          <h3>متابعة واتساب 5 أيام</h3>
+          <p>رسائل قصيرة لتثبيت التنفيذ ومنع التسويف والانسحاب.</p>
+        </div>
+        <div class="card">
+          <h3>قوالب جاهزة</h3>
+          <p>خريطة قرار + خطة أسبوع + تتبع بسيط + ملخصات قصيرة.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <h3>البونصات</h3>
+        <ul class="list">
+          <li>قالب تقييم سريع للحياة + اختيار 3 مجالات للتركيز.</li>
+          <li>دليل صفحة واحدة: الكوتشينج vs العلاج النفسي.</li>
+          <li>خطة 7 أيام لكسر التسويف (Micro-commitments).</li>
+          <li>ملخص صوتي بعد كل جلسة (5 دقائق).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <h2 class="section-title">كيف نشتغل؟ (3 مراحل)</h2>
+      <p class="section-sub">واضحة، بسيطة، وكل مرحلة لها نتيجة.</p>
+
+      <div class="framework">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <h4>وضوح</h4>
+            <p>نحدد المشكلة الحقيقية + القرار المؤجل + العائق الحقيقي (خوف/تشتت/قناعة/حدود).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <h4>خطوات</h4>
+            <p>3 خطوات أسبوعية فقط تناسب وقتك وتقدر تطبقها بدون ضغط زائد.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <h4>متابعة</h4>
+            <p>متابعة قصيرة تمنع التسويف + تصحيح مسار سريع + تثبيت عادة التنفيذ.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card guarantee" style="margin-top:14px;">
+        <h3 style="margin-top:0;">ضمان الوضوح — الأسبوع الأول</h3>
+        <p style="margin:0; color:rgba(238,242,255,.92)">
+          إذا ما خرجت من الأسبوع الأول بـ <b>قرار واضح + 3 خطوات مكتوبة + نظام متابعة يناسب حياتك</b> → لك جلسة إضافية مجانًا.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">الباقات</h2>
+      <p class="section-sub">إذا متردد: ابدأ بـ Starter.</p>
+
+      <div class="pricing">
+        <div class="plan">
+          <h3>Starter</h3>
+          <div class="tag">جلسة تشخيص + خطة أسبوع</div>
+          <div class="money">349–499 ر.س</div>
+          <p class="desc">خطوة أولى لتأخذ وضوح وخطة قبل الالتزام الكامل.</p>
+          <ul>
+            <li>جلسة 60 دقيقة</li>
+            <li>قرار واحد واضح</li>
+            <li>3 خطوات للأسبوع</li>
+            <li>ملخص مكتوب خلال 24 ساعة</li>
+          </ul>
+          <div class="foot">
+            <a class="btn btn-primary btn-small" href="javascript:void(0)" onclick="goReserve()">قدّم طلب حجز</a>
+            <a class="btn btn-small" href="javascript:void(0)" onclick="goWhats()">واتساب</a>
+          </div>
+        </div>
+
+        <div class="plan featured">
+          <h3>Core (العرض القاتل)</h3>
+          <div class="tag">برنامج 6 أسابيع (1:1 + متابعة)</div>
+          <div class="money">2,900–4,900 ر.س</div>
+          <p class="desc">وضوح + تنفيذ ثابت + متابعة تمنع الرجوع للدوامة.</p>
+          <ul>
+            <li>6 جلسات أسبوعية (60 دقيقة)</li>
+            <li>متابعة واتساب 5 أيام</li>
+            <li>قوالب وخطة أسبوعية</li>
+            <li>ملخص صوتي بعد كل جلسة</li>
+            <li>خطة 90 يوم في النهاية</li>
+            <li><b>ضمان الوضوح بالأسبوع الأول</b></li>
+          </ul>
+          <div class="foot">
+            <a class="btn btn-primary btn-small" href="javascript:void(0)" onclick="goReserve()">قدّم طلب</a>
+            <a class="btn btn-small" href="javascript:void(0)" onclick="goWhats()">واتساب</a>
+          </div>
+        </div>
+
+        <div class="plan">
+          <h3>Premium (VIP)</h3>
+          <div class="tag">دعم مكثف + تثبيت أسرع</div>
+          <div class="money">5,900–7,900 ر.س</div>
+          <p class="desc">لمن يريد متابعة أعلى وسرعة أكبر في الحسم والتنفيذ.</p>
+          <ul>
+            <li>كل مميزات Core</li>
+            <li>متابعة 7 أيام</li>
+            <li>رسائل طوارئ أسبوعية</li>
+            <li>جلسة إضافية لتثبيت خطة 90 يوم</li>
+          </ul>
+          <div class="foot">
+            <a class="btn btn-primary btn-small" href="javascript:void(0)" onclick="goReserve()">قدّم طلب</a>
+            <a class="btn btn-small" href="javascript:void(0)" onclick="goWhats()">واتساب</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:12px;">
+        🔒 الخصوصية: كل ما يُقال في الجلسات سري. هذا كوتشينج عملي وليس بديلًا عن العلاج النفسي/الطبي.
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title">أسئلة شائعة</h2>
+      <p class="section-sub">إجابات مختصرة عشان ما يظل عندك تردد.</p>
+
+      <div class="faq">
+        <details>
+          <summary>هل هذا علاج نفسي؟</summary>
+          <p>لا. هذا كوتشينج عملي لبناء وضوح وخطوات وقرارات للمستقبل. إذا كنت تحتاج دعم علاجي متخصص، نوجهك للجهة المناسبة.</p>
+        </details>
+        <details>
+          <summary>أنا مشغول… هل بقدر ألتزم؟</summary>
+          <p>النظام مبني على 3 خطوات أسبوعية فقط + متابعة قصيرة. الهدف تنفيذ واقعي، مو مثالية.</p>
+        </details>
+        <details>
+          <summary>كيف يتم الحجز؟</summary>
+          <p>تضغط “احجز الآن” وتدخل صفحة الطلب، تملأ البيانات وتضغط “حفظ الطلب”.</p>
+        </details>
+        <details>
+          <summary>هل يوجد سرية؟</summary>
+          <p>نعم. سرية كاملة وبيئة بدون أحكام.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="panel final-cta">
+        <h2>جاهز تبدأ بخطوة واضحة؟</h2>
+        <p>قدّم طلب حجز الآن، وبنرد عليك لتأكيد الموعد المناسب.</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
+          <a class="btn btn-primary" href="javascript:void(0)" onclick="goReserve()">قدّم طلب حجز</a>
+          <a class="btn btn-green" href="javascript:void(0)" onclick="goWhats()">واتساب الآن</a>
+        </div>
+        <div class="note">✅ سرية كاملة — ✅ بدون أحكام — ✅ خطة عملية</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>© <span id="y"></span> بوصله</div>
+        <div>هذا كوتشينج عملي وليس بديلًا طبيًا/علاجيًا.</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="floating" aria-label="شريط أزرار ثابت">
+    <a class="btn btn-primary" href="javascript:void(0)" onclick="goReserve()">احجز الآن</a>
+    <a class="btn btn-green" href="javascript:void(0)" onclick="goWhats()">واتساب</a>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+    document.getElementById("brandName").textContent = COMPANY_NAME;
+  </script>
+</body>
+</html>
